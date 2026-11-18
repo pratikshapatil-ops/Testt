@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styles Station Unisex Salon and Academy</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans pb-10">
+
+    <!-- Header -->
+    <header class="bg-pink-600 text-white p-4 shadow-md text-center">
+        <h1 class="text-xl md:text-2xl font-bold">Style Station Unisex Salon and Academy</h1>
+        <p class="text-xs text-pink-200 mt-1 italic">"Where style and passion are born"</p>
+    </header>
+
+    <main class="container mx-auto p-4 max-w-3xl">
+
+        <!-- 5 Main Navigation Buttons -->
+        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 mb-6">
+            <button type="button" onclick="switchTab('client')" id="btnClient" class="p-3 bg-pink-600 text-white rounded-xl font-bold text-xs text-center shadow">💇‍♀️ Client</button>
+            <button type="button" onclick="switchTab('student')" id="btnStudent" class="p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center">🎓 Student</button>
+            <button type="button" onclick="switchTab('reminder')" id="btnReminder" class="p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center flex justify-center items-center gap-1">🔔 Rem <span id="reminderBadge" class="bg-red-500 text-white text-[10px] px-1.5 py-0.2 rounded-full">0</span></button>
+            <button type="button" onclick="switchTab('billing')" id="btnBilling" class="p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center">🧾 Billing</button>
+            <button type="button" onclick="switchTab('stock')" id="btnStock" class="p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center">📦 Stock</button>
+        </div>
+
+        <!-- 1. CLIENT SECTION -->
+        <div id="sectionClient" class="tab-content space-y-6">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h2 id="clientFormTitle" class="text-lg font-semibold text-pink-600 mb-3">💇‍♀️ नवीन क्लायंट माहिती भरा</h2>
+                <form id="clientForm" class="space-y-3">
+                    <input type="hidden" id="clientEditIndex" value="-1">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">क्लायंटचे नाव</label>
+                        <input type="text" id="clientName" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">मोबाइल नंबर</label>
+                        <input type="tel" id="clientPhone" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">घेतलेली सेवा (उदा. Spa)</label>
+                        <input type="text" id="clientService" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">सेवेची तारीख</label>
+                        <input type="date" id="clientDate" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500">
+                    </div>
+                    <button type="submit" id="clientSubmitBtn" class="w-full bg-pink-600 text-white py-2 rounded-lg text-sm font-semibold">क्लायंट सेव्ह करा</button>
+                </form>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-2 text-sm">📋 जुनी क्लायंट यादी</h3>
+                <input type="text" id="searchClient" placeholder="🔍 शोधा..." class="w-full p-2 mb-3 border rounded-lg text-sm" onkeyup="renderClients()">
+                <div id="clientList" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- 2. STUDENT SECTION -->
+        <div id="sectionStudent" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h2 id="studentFormTitle" class="text-lg font-semibold text-purple-600 mb-3">🎓 नवीन विद्यार्थी माहिती भरा</h2>
+                <form id="studentForm" class="space-y-3">
+                    <input type="hidden" id="studentEditIndex" value="-1">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">विद्यार्थ्याचे नाव</label>
+                        <input type="text" id="studentName" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">कोर्सचे नाव</label>
+                        <input type="text" id="studentCourse" required class="w-full mt-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">भरलेली फी</label>
+                            <input type="number" id="paidFee" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700">एकूण फी</label>
+                            <input type="number" id="totalFee" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                        </div>
+                    </div>
+                    <button type="submit" id="studentSubmitBtn" class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-semibold">विद्यार्थी सेव्ह करा</button>
+                </form>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-2 text-sm">📋 जुनी विद्यार्थी यादी</h3>
+                <input type="text" id="searchStudent" placeholder="🔍 शोधा..." class="w-full p-2 mb-3 border rounded-lg text-sm" onkeyup="renderStudents()">
+                <div id="studentList" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- 3. REMINDERS SECTION -->
+        <div id="sectionReminder" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h2 class="text-lg font-semibold text-yellow-700 mb-2">🔔 मासिक रिमाइंडर्स (१ महिना पूर्ण)</h2>
+                <div id="reminderList" class="space-y-3 mt-3"></div>
+            </div>
+        </div>
+
+        <!-- 4. BILLING SECTION -->
+        <div id="sectionBilling" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h2 id="billingFormTitle" class="text-lg font-semibold text-green-600 mb-3">🧾 बिल आणि पावती तयार करा</h2>
+                <form id="billingForm" class="space-y-3">
+                    <input type="hidden" id="billingEditIndex" value="-1">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">ग्राहकाचे नाव</label>
+                        <input type="text" id="billCustomer" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">सेवा / प्रॉडक्ट</label>
+                        <input type="text" id="billService" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">रक्कम (₹)</label>
+                        <input type="number" id="billAmount" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                    </div>
+                    <button type="submit" id="billingSubmitBtn" class="w-full bg-green-600 text-white py-2 rounded-lg text-sm font-semibold">बिल सेव्ह करा</button>
+                </form>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-2 text-sm">📋 जुनी बिल्स</h3>
+                <div id="billingList" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- 5. STOCK SECTION -->
+        <div id="sectionStock" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h2 id="stockFormTitle" class="text-lg font-semibold text-blue-600 mb-3">📦 प्रॉडक्ट स्टॉक जोडा</h2>
+                <form id="stockForm" class="space-y-3">
+                    <input type="hidden" id="stockEditIndex" value="-1">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">प्रॉडक्टचे नाव</label>
+                        <input type="text" id="stockName" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">नग (Quantity)</label>
+                        <input type="number" id="stockQty" required class="w-full mt-1 p-2 border rounded-lg text-sm">
+                    </div>
+                    <button type="submit" id="stockSubmitBtn" class="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-semibold">स्टॉक सेव्ह करा</button>
+                </form>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <h3 class="font-bold text-gray-800 mb-2 text-sm">📦 सध्याचा स्टॉक</h3>
+                <div id="stockList" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+
+    </main>
+    <!-- JavaScript Logic -->
+    <script>
+        function switchTab(tabName) {
+            document.getElementById('sectionClient').classList.add('hidden');
+            document.getElementById('sectionStudent').classList.add('hidden');
+            document.getElementById('sectionReminder').classList.add('hidden');
+            document.getElementById('sectionBilling').classList.add('hidden');
+            document.getElementById('sectionStock').classList.add('hidden');
+
+            document.getElementById('btnClient').className = "p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center";
+            document.getElementById('btnStudent').className = "p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center";
+            document.getElementById('btnReminder').className = "p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center flex justify-center items-center gap-1";
+            document.getElementById('btnBilling').className = "p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center";
+            document.getElementById('btnStock').className = "p-3 bg-gray-300 text-gray-700 rounded-xl font-bold text-xs text-center";
+
+            if(tabName === 'client') {
+                document.getElementById('sectionClient').classList.remove('hidden');
+                document.getElementById('btnClient').className = "p-3 bg-pink-600 text-white rounded-xl font-bold text-xs text-center shadow";
+                renderClients();
+            } else if(tabName === 'student') {
+                document.getElementById('sectionStudent').classList.remove('hidden');
+                document.getElementById('btnStudent').className = "p-3 bg-purple-600 text-white rounded-xl font-bold text-xs text-center shadow";
+                renderStudents();
+            } else if(tabName === 'reminder') {
+                document.getElementById('sectionReminder').classList.remove('hidden');
+                document.getElementById('btnReminder').className = "p-3 bg-yellow-600 text-white rounded-xl font-bold text-xs text-center shadow flex justify-center items-center gap-1";
+                renderReminders();
+            } else if(tabName === 'billing') {
+                document.getElementById('sectionBilling').classList.remove('hidden');
+                document.getElementById('btnBilling').className = "p-3 bg-green-600 text-white rounded-xl font-bold text-xs text-center shadow";
+                renderBills();
+            } else if(tabName === 'stock') {
+                document.getElementById('sectionStock').classList.remove('hidden');
+                document.getElementById('btnStock').className = "p-3 bg-blue-600 text-white rounded-xl font-bold text-xs text-center shadow";
+                renderStock();
+            }
+        }
+
+        const getTodayDateStr = () => new Date().toISOString().split('T')[0];
+
+        // --- Client Logic ---
+        let clients = JSON.parse(localStorage.getItem('clients')) || [];
+        document.getElementById('clientForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let editIdx = document.getElementById('clientEditIndex').value;
+            let clientData = {
+                name: document.getElementById('clientName').value,
+                phone: document.getElementById('clientPhone').value,
+                service: document.getElementById('clientService').value,
+                date: document.getElementById('clientDate').value
+            };
+
+            if(editIdx === "-1") {
+                clients.push(clientData);
+                alert('क्लायंट सेव्ह झाला!');
+            } else {
+                clients[editIdx] = clientData;
+                document.getElementById('clientEditIndex').value = "-1";
+                document.getElementById('clientSubmitBtn').innerText = "क्लायंट सेव्ह करा";
+                document.getElementById('clientFormTitle').innerText = "💇‍♀️ नवीन क्लायंट माहिती भरा";
+                alert('क्लायंट अपडेट झाला!');
+            }
+
+            localStorage.setItem('clients', JSON.stringify(clients));
+            document.getElementById('clientForm').reset();
+            renderClients();
+            updateReminderCount();
+        });
+
+        function renderClients() {
+            let list = document.getElementById('clientList');
+            list.innerHTML = '';
+            let search = document.getElementById('searchClient').value.toLowerCase();
+            let filtered = clients.filter(c => c.name.toLowerCase().includes(search) || c.phone.includes(search));
+            if(filtered.length === 0) { list.innerHTML = `<p class="text-gray-400 text-xs text-center">डेटा नाही.</p>`; return; }
+            filtered.forEach((c) => {
+                let originalIdx = clients.indexOf(c);
+                list.innerHTML += `<div class="p-2.5 bg-gray-50 border rounded-lg flex justify-between items-center text-xs">
+                    <div><b>${c.name}</b> (${c.phone})<br><span class="text-gray-600">${c.service} | ${c.date}</span></div>
+                    <div class="flex gap-2 font-bold">
+                        <button onclick="editClient(${originalIdx})" class="text-blue-600">एडिट</button>
+                        <button onclick="deleteData('clients', ${originalIdx})" class="text-red-500">डिलीट</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function editClient(index) {
+            let c = clients[index];
+            document.getElementById('clientName').value = c.name;
+            document.getElementById('clientPhone').value = c.phone;
+            document.getElementById('clientService').value = c.service;
+            document.getElementById('clientDate').value = c.date;
+            document.getElementById('clientEditIndex').value = index;
+            document.getElementById('clientSubmitBtn').innerText = "क्लायंट अपडेट करा";
+            document.getElementById('clientFormTitle').innerText = "✏️ क्लायंट माहिती बदला (Edit)";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- Student Logic ---
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        document.getElementById('studentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let editIdx = document.getElementById('studentEditIndex').value;
+            let studentData = {
+                name: document.getElementById('studentName').value,
+                course: document.getElementById('studentCourse').value,
+                paid: Number(document.getElementById('paidFee').value),
+                total: Number(document.getElementById('totalFee').value)
+            };
+
+            if(editIdx === "-1") {
+                students.push(studentData);
+                alert('विद्यार्थी सेव्ह झाला!');
+            } else {
+                students[editIdx] = studentData;
+                document.getElementById('studentEditIndex').value = "-1";
+                document.getElementById('studentSubmitBtn').innerText = "विद्यार्थी सेव्ह करा";
+                document.getElementById('studentFormTitle').innerText = "🎓 नवीन विद्यार्थी माहिती भरा";
+                alert('विद्यार्थी अपडेट झाला!');
+            }
+
+            localStorage.setItem('students', JSON.stringify(students));
+            document.getElementById('studentForm').reset();
+            renderStudents();
+        });
+
+        function renderStudents() {
+            let list = document.getElementById('studentList');
+            list.innerHTML = '';
+            let search = document.getElementById('searchStudent').value.toLowerCase();
+            let filtered = students.filter(s => s.name.toLowerCase().includes(search));
+            if(filtered.length === 0) { list.innerHTML = `<p class="text-gray-400 text-xs text-center">डेटा नाही.</p>`; return; }
+            filtered.forEach((s) => {
+                let originalIdx = students.indexOf(s);
+                let pending = s.total - s.paid;
+                list.innerHTML += `<div class="p-2.5 bg-gray-50 border rounded-lg flex justify-between items-center text-xs">
+                    <div><b>${s.name}</b> - <span class="text-purple-600">${s.course}</span><br>भरलेली: ₹${s.paid} | बाकी: ₹${pending}</div>
+                    <div class="flex gap-2 font-bold">
+                        <button onclick="editStudent(${originalIdx})" class="text-blue-600">एडिट</button>
+                        <button onclick="deleteData('students', ${originalIdx})" class="text-red-500">डिलीट</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function editStudent(index) {
+            let s = students[index];
+            document.getElementById('studentName').value = s.name;
+            document.getElementById('studentCourse').value = s.course;
+            document.getElementById('paidFee').value = s.paid;
+            document.getElementById('totalFee').value = s.total;
+            document.getElementById('studentEditIndex').value = index;
+            document.getElementById('studentSubmitBtn').innerText = "विद्यार्थी अपडेट करा";
+            document.getElementById('studentFormTitle').innerText = "✏️ विद्यार्थी माहिती बदला (Edit)";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- Reminders (Professional Message Added) ---
+        function renderReminders() {
+            let list = document.getElementById('reminderList');
+            list.innerHTML = '';
+            let today = getTodayDateStr();
+            let html = '';
+            clients.forEach(c => {
+                let remDate = new Date(c.date);
+                remDate.setMonth(remDate.getMonth() + 1);
+                if(remDate.toISOString().split('T')[0] <= today) {
+                    // प्रोफेशनल मेसेज तयार करणे
+                    let msg = `नमस्कार ${c.name}, Styles Station Unisex Salon & Academy मधून संपर्क करत आहोत. महिनाभरापूर्वी तुम्ही आमच्याकडे ${c.service} सर्व्हिस घेतली होती. तुमच्या स्कीन आणि हेअर केअरची काळजी घेण्यासाठी आम्ही पुन्हा एकदा तुमच्या स्वागतासाठी तयार आहोत. अपॉइंटमेंट बुक करण्यासाठी संपर्क करा. धन्यवाद! ✨`;
+                    let encodedMsg = encodeURIComponent(msg);
+
+                    html += `<div class="p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg flex justify-between items-center text-xs">
+                        <div><b>${c.name}</b> (${c.phone})<br><span class="text-yellow-700">${c.service} साठी १ महिना पूर्ण!</span></div>
+                        <a href="https://wa.me/91${c.phone}?text=${encodedMsg}" target="_blank" class="bg-green-600 text-white px-2.5 py-1.5 rounded font-bold">WhatsApp</a>
+                    </div>`;
+                }
+            });
+            list.innerHTML = html || `<p class="text-gray-500 text-xs text-center py-4">सध्या कोणतेही रिमाइंडर्स नाहीत.</p>`;
+        }
+
+        function updateReminderCount() {
+            let today = getTodayDateStr();
+            let count = 0;
+            clients.forEach(c => {
+                let remDate = new Date(c.date);
+                remDate.setMonth(remDate.getMonth() + 1);
+                if(remDate.toISOString().split('T')[0] <= today) count++;
+            });
+            document.getElementById('reminderBadge').innerText = count;
+        }
+
+        // --- Billing ---
+        let bills = JSON.parse(localStorage.getItem('bills')) || [];
+        document.getElementById('billingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let editIdx = document.getElementById('billingEditIndex').value;
+            let billData = {
+                customer: document.getElementById('billCustomer').value,
+                service: document.getElementById('billService').value,
+                amount: document.getElementById('billAmount').value
+            };
+
+            if(editIdx === "-1") {
+                bills.push(billData);
+                alert('बिल सेव्ह झाले!');
+            } else {
+                bills[editIdx] = billData;
+                document.getElementById('billingEditIndex').value = "-1";
+                document.getElementById('billingSubmitBtn').innerText = "बिल सेव्ह करा";
+                document.getElementById('billingFormTitle').innerText = "🧾 बिल आणि पावती तयार करा";
+                alert('बिल अपडेट झाले!');
+            }
+
+            localStorage.setItem('bills', JSON.stringify(bills));
+            document.getElementById('billingForm').reset();
+            renderBills();
+        });
+
+        function renderBills() {
+            let list = document.getElementById('billingList');
+            list.innerHTML = '';
+            if(bills.length === 0) { list.innerHTML = `<p class="text-gray-400 text-xs text-center">कोणतेही बिल नाही.</p>`; return; }
+            bills.forEach((b, idx) => {
+                let text = `✨ *Styles Station Unisex Salon & Academy* ✨%0A--------------------------------%0Aग्राहक: ${b.customer}%0Aसेवा: ${b.service}%0Aरक्कम: ₹${b.amount}%0A--------------------------------%0Aधन्यवाद! 🙏`;
+                list.innerHTML += `<div class="p-2.5 bg-gray-50 border rounded-lg flex justify-between items-center text-xs">
+                    <div><b>${b.customer}</b> - ${b.service}<br><span class="text-green-600 font-bold">₹${b.amount}</span></div>
+                    <div class="flex gap-2 items-center">
+                        <a href="https://wa.me/?text=${text}" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded">WhatsApp</a>
+                        <button onclick="editBill(${idx})" class="text-blue-600 font-bold">एडिट</button>
+                        <button onclick="deleteData('bills', ${idx})" class="text-red-500 font-bold">डिलीट</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function editBill(index) {
+            let b = bills[index];
+            document.getElementById('billCustomer').value = b.customer;
+            document.getElementById('billService').value = b.service;
+            document.getElementById('billAmount').value = b.amount;
+            document.getElementById('billingEditIndex').value = index;
+            document.getElementById('billingSubmitBtn').innerText = "बिल अपडेट करा";
+            document.getElementById('billingFormTitle').innerText = "✏️ बिल माहिती बदला (Edit)";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- Stock ---
+        let stocks = JSON.parse(localStorage.getItem('stocks')) || [];
+        document.getElementById('stockForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let editIdx = document.getElementById('stockEditIndex').value;
+            let stockData = {
+                name: document.getElementById('stockName').value,
+                qty: document.getElementById('stockQty').value
+            };
+
+            if(editIdx === "-1") {
+                stocks.push(stockData);
+                alert('स्टॉक सेव्ह झाला!');
+            } else {
+                stocks[editIdx] = stockData;
+                document.getElementById('stockEditIndex').value = "-1";
+                document.getElementById('stockSubmitBtn').innerText = "स्टॉक सेव्ह करा";
+                document.getElementById('stockFormTitle').innerText = "📦 प्रॉडक्ट स्टॉक जोडा";
+                alert('स्टॉक अपडेट झाला!');
+            }
+
+            localStorage.setItem('stocks', JSON.stringify(stocks));
+            document.getElementById('stockForm').reset();
+            renderStock();
+        });
+
+        function renderStock() {
+            let list = document.getElementById('stockList');
+            list.innerHTML = '';
+            if(stocks.length === 0) { list.innerHTML = `<p class="text-gray-400 text-xs text-center">स्टॉक खाली आहे.</p>`; return; }
+            stocks.forEach((st, idx) => {
+                list.innerHTML += `<div class="p-2.5 bg-gray-50 border rounded-lg flex justify-between items-center text-xs">
+                    <div><b>${st.name}</b></div>
+                    <div class="flex gap-2 items-center">
+                        <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded font-bold">नग: ${st.qty}</span>
+                        <button onclick="editStock(${idx})" class="text-blue-600 font-bold">एडिट</button>
+                        <button onclick="deleteData('stocks', ${idx})" class="text-red-500 font-bold">डिलीट</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function editStock(index) {
+            let st = stocks[index];
+            document.getElementById('stockName').value = st.name;
+            document.getElementById('stockQty').value = st.qty;
+            document.getElementById('stockEditIndex').value = index;
+            document.getElementById('stockSubmitBtn').innerText = "स्टॉक अपडेट करा";
+            document.getElementById('stockFormTitle').innerText = "✏️ स्टॉक माहिती बदला (Edit)";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Delete Helper
+        function deleteData(type, index) {
+            if(confirm('रेकॉर्ड डिलीट करायचा का?')) {
+                if(type === 'clients') { clients.splice(index, 1); localStorage.setItem('clients', JSON.stringify(clients)); renderClients(); updateReminderCount(); }
+                if(type === 'students') { students.splice(index, 1); localStorage.setItem('students', JSON.stringify(students)); renderStudents(); }
+                if(type === 'bills') { bills.splice(index, 1); localStorage.setItem('bills', JSON.stringify(bills)); renderBills(); }
+                if(type === 'stocks') { stocks.splice(index, 1); localStorage.setItem('stocks', JSON.stringify(stocks)); renderStock(); }
+            }
+        }
+
+        // Initial Calls
+        updateReminderCount();
+        renderClients();
+    </script>
+</body>
+</html>
